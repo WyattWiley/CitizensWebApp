@@ -47,6 +47,8 @@ namespace CitizensWebApp
             return dt;
         }
 
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             // If a query string parameter named 'ProjectID' is given, you will be redirected to the 'Institutions.aspx' page.
@@ -62,6 +64,18 @@ namespace CitizensWebApp
                     ProjectDetailsRepeater.DataSource = GetDataTable();
                     ProjectDetailsRepeater.DataBind();
                 }
+            }
+        }
+
+        protected void btnAddObservation_Click(object sender, EventArgs e)
+        {
+            if (!HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("Login.aspx");
+            }
+            else
+            {
+                Response.Redirect("NewReports.aspx?ProjectID=" + Request.QueryString["ProjectID"]);
             }
         }
     }
