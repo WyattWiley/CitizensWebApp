@@ -18,13 +18,14 @@ namespace CitizensWebApp
         {
             if (!IsPostBack)
             {
+                // Making sure user is logged in and if not redirects them to the login page
                 if (!HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     Response.Redirect("Login.aspx");
                 }
                 else
                 {
-                    LoadReports();
+                    LoadReports(); // Loads the reports (or observations) this Volunteer has made
                 }
             }
         }
@@ -74,7 +75,7 @@ namespace CitizensWebApp
             // Define the connection string
             string connString = ConfigurationManager.ConnectionStrings["CitizenScienceDB"].ConnectionString;
 
-            // Call spUpdateObservation
+            // Call spUpdateObservation which will update the edited rows
             using (SqlConnection connection = new SqlConnection(connString))
             using (SqlCommand command = new SqlCommand("EXEC spUpdateObservation @ObservationID, @Value, @ObservedDate, @Notes, @ToolID, @Latitude, @Longitude", connection))
             {
@@ -106,7 +107,7 @@ namespace CitizensWebApp
             // Define the connection string
             string connString = ConfigurationManager.ConnectionStrings["CitizenScienceDB"].ConnectionString;
 
-            // Call spDeleteObservation
+            // Call spDeleteObservation which will delete the Observation that you have chosen to delete
             using (SqlConnection connection = new SqlConnection(connString))
             using (SqlCommand command = new SqlCommand("EXEC spDeleteObservation @ObservationID", connection))
             {
@@ -121,6 +122,7 @@ namespace CitizensWebApp
             LoadReports();
         }
 
+        // If you click edit accidentally or change your mind about editing, this will allow you to cancel your edit. 
         protected void gvReports_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             gvReports.EditIndex = -1;

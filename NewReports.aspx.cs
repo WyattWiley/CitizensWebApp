@@ -24,6 +24,29 @@ namespace CitizensWebApp
                     Response.Redirect("Institutions.aspx");
                 }
             }
+
+            txtReportDate.Visible = true;
+            lblReportDate.Visible = true;
+
+            txtValue.Visible = true;
+            lblValue.Visible = true;
+
+            txtObservedDate.Visible = true;
+            lblObservedDate.Visible = true;
+
+            txtNotes.Visible = true;
+            lblNotes.Visible = true;
+
+            txtToolID.Visible = true;
+            lblToolID.Visible = true;
+
+            txtLatitude.Visible = true;
+            lblLatitude.Visible = true;
+
+            txtLongitude.Visible = true;
+            lblLongitude.Visible = true;
+
+            btnSubmit.Visible = true;
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -60,13 +83,28 @@ namespace CitizensWebApp
                     lblMessage.Text = "Observation added successfully!";
 
                     // Clearing text boxes after success message
-                    txtReportDate.Text = "";
-                    txtValue.Text = "";
-                    txtObservedDate.Text = "";
-                    txtNotes.Text = "";
-                    txtToolID.Text = "";
-                    txtLatitude.Text = "";
-                    txtLongitude.Text = "";
+                    txtReportDate.Visible = false;
+                    lblReportDate.Visible = false;
+
+                    txtValue.Visible = false;
+                    lblValue.Visible = false;
+
+                    txtObservedDate.Visible = false;
+                    lblObservedDate.Visible = false;
+
+                    txtNotes.Visible = false;
+                    lblNotes.Visible = false;
+
+                    txtToolID.Visible = false;
+                    lblToolID.Visible = false;
+
+                    txtLatitude.Visible = false;
+                    lblLatitude.Visible = false;
+
+                    txtLongitude.Visible = false;
+                    lblLongitude.Visible = false;
+
+                    btnSubmit.Visible = false;
                 }
             }
         }
