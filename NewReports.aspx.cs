@@ -15,6 +15,7 @@ namespace CitizensWebApp
         {
             if (!IsPostBack)
             {
+                // If the user is authenticated it will open the add observation screen if not it will redirect you to the login screen
                 if (!HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     Response.Redirect("Login.aspx");
@@ -25,6 +26,7 @@ namespace CitizensWebApp
                 }
             }
 
+            // Making sure the text boxes are loaded in when screen is displayed
             txtReportDate.Visible = true;
             lblReportDate.Visible = true;
 
@@ -54,6 +56,7 @@ namespace CitizensWebApp
             string connString = ConfigurationManager.ConnectionStrings["CitizenScienceDB"].ConnectionString;
             using (SqlConnection connection = new SqlConnection(connString))
             {
+                // Getting the VolunteerID to store the observation connected to the VolunteerID automatically given to the user
                 int volunteerId;
                 using (SqlCommand command = new SqlCommand("EXEC spGetVolunteerID @Email", connection))
                 {
@@ -64,6 +67,7 @@ namespace CitizensWebApp
                     connection.Close();
                 }
 
+                // Executing the spAddObservation procedure when the VolunteerID is recognized
                 using (SqlCommand command = new SqlCommand("EXEC spAddObservation @ProjectID, @ReportDate, @Value, @ObservedDate, @Notes, @ToolID, @Latitude, @Longitude, @VolunteerID", connection))  // Include @VolunteerID
                 {
                     command.Parameters.AddWithValue("@ProjectID", Request.QueryString["ProjectID"]);
@@ -82,7 +86,7 @@ namespace CitizensWebApp
 
                     lblMessage.Text = "Observation added successfully!";
 
-                    // Clearing text boxes after success message
+                    // Clearing text boxes and titles after success message
                     txtReportDate.Visible = false;
                     lblReportDate.Visible = false;
 
@@ -104,6 +108,7 @@ namespace CitizensWebApp
                     txtLongitude.Visible = false;
                     lblLongitude.Visible = false;
 
+                    // Also hiding the submit button
                     btnSubmit.Visible = false;
                 }
             }
